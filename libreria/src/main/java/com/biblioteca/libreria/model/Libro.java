@@ -18,6 +18,7 @@ public class Libro {
     private Double precio;
     private LocalDate fechaPublicacion;
     private String isbn;
+    private String imagen;
 
     @ManyToOne
     @JoinColumn(name = "id_categoria")
