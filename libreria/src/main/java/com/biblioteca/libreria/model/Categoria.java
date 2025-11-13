@@ -17,5 +17,5 @@ public class Categoria {
     @OneToMany(mappedBy = "categoria")
     private List<Libro> libros;
 
-    // Getters y setters
+     //Getters y setters
 }

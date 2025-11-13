@@ -24,5 +24,5 @@ public class Usuario {
     @ManyToMany(mappedBy = "usuariosBiblioteca")
     private List<Libro> bibliotecaPersonal;
 
-    // Getters y setters
+     //Getters y setters
 }

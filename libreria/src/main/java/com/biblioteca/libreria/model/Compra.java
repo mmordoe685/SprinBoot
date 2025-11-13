@@ -17,7 +17,7 @@ public class Compra {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")
-    private Usuario usuario;
+   private Usuario usuario;
 
     @OneToMany(mappedBy = "compra")
     private List<LibroHasCompra> detalles;
