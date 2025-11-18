@@ -1,0 +1,81 @@
+2025-11-18T14:16:17.771+01:00  INFO 17716 --- [libreria] [main] c.b.libreria.LibreriaApplication         : Starting LibreriaApplication using Java 17.0.12 with PID 17716 (C:\Proyecto_SpringBoot\SprinBoot\libreria\target\classes started by Marcos in C:\Proyecto_SpringBoot\SprinBoot\libreria)
+2025-11-18T14:16:17.773+01:00  INFO 17716 --- [libreria] [main] c.b.libreria.LibreriaApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-11-18T14:16:18.682+01:00  INFO 17716 --- [libreria] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-18T14:16:18.791+01:00  INFO 17716 --- [libreria] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 90 ms. Found 1 JPA repository interface.
+2025-11-18T14:16:19.596+01:00  INFO 17716 --- [libreria] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2025-11-18T14:16:19.627+01:00  INFO 17716 --- [libreria] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-18T14:16:19.630+01:00  INFO 17716 --- [libreria] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.13]
+2025-11-18T14:16:19.681+01:00  INFO 17716 --- [libreria] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1846 ms
+2025-11-18T14:16:20.035+01:00  INFO 17716 --- [libreria] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-18T14:16:20.151+01:00  INFO 17716 --- [libreria] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 7.1.6.Final
+2025-11-18T14:16:20.980+01:00  INFO 17716 --- [libreria] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-18T14:16:21.053+01:00  INFO 17716 --- [libreria] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-11-18T14:16:21.629+01:00  INFO 17716 --- [libreria] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@308c65e0
+2025-11-18T14:16:21.640+01:00  INFO 17716 --- [libreria] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-11-18T14:16:21.746+01:00  WARN 17716 --- [libreria] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-18T14:16:21.820+01:00  INFO 17716 --- [libreria] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/biblioteca]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.41
+	Default catalog/schema: biblioteca/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DatasourceConnectionProviderImpl
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-11-18T14:16:23.615+01:00  INFO 17716 --- [libreria] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-18T14:16:23.981+01:00  INFO 17716 --- [libreria] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-18T14:16:24.069+01:00  WARN 17716 --- [libreria] [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'usuarioController' defined in file [C:\Proyecto_SpringBoot\SprinBoot\libreria\target\classes\com\biblioteca\libreria\controller\UsuarioController.class]: Failed to instantiate [com.biblioteca.libreria.controller.UsuarioController]: Constructor threw exception
+2025-11-18T14:16:24.069+01:00  INFO 17716 --- [libreria] [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-11-18T14:16:24.076+01:00  INFO 17716 --- [libreria] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-11-18T14:16:24.092+01:00  INFO 17716 --- [libreria] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-11-18T14:16:24.095+01:00  INFO 17716 --- [libreria] [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-11-18T14:16:24.112+01:00  INFO 17716 --- [libreria] [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-11-18T14:16:24.150+01:00 ERROR 17716 --- [libreria] [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'usuarioController' defined in file [C:\Proyecto_SpringBoot\SprinBoot\libreria\target\classes\com\biblioteca\libreria\controller\UsuarioController.class]: Failed to instantiate [com.biblioteca.libreria.controller.UsuarioController]: Constructor threw exception
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1344) ~[spring-beans-7.0.0-RC3.jar:7.0.0-RC3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1231) ~[spring-beans-7.0.0-RC3.jar:7.0.0-RC3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565) ~[spring-beans-7.0.0-RC3.jar:7.0.0-RC3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.0-RC3.jar:7.0.0-RC3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.0-RC3.jar:7.0.0-RC3]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.0-RC3.jar:7.0.0-RC3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.0-RC3.jar:7.0.0-RC3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196) ~[spring-beans-7.0.0-RC3.jar:7.0.0-RC3]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218) ~[spring-beans-7.0.0-RC3.jar:7.0.0-RC3]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184) ~[spring-beans-7.0.0-RC3.jar:7.0.0-RC3]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121) ~[spring-beans-7.0.0-RC3.jar:7.0.0-RC3]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:983) ~[spring-context-7.0.0-RC3.jar:7.0.0-RC3]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:620) ~[spring-context-7.0.0-RC3.jar:7.0.0-RC3]
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143) ~[spring-boot-web-server-4.0.0-RC2.jar:4.0.0-RC2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:765) ~[spring-boot-4.0.0-RC2.jar:4.0.0-RC2]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:454) ~[spring-boot-4.0.0-RC2.jar:4.0.0-RC2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321) ~[spring-boot-4.0.0-RC2.jar:4.0.0-RC2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1374) ~[spring-boot-4.0.0-RC2.jar:4.0.0-RC2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363) ~[spring-boot-4.0.0-RC2.jar:4.0.0-RC2]
+	at com.biblioteca.libreria.LibreriaApplication.main(LibreriaApplication.java:10) ~[classes/:na]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.biblioteca.libreria.controller.UsuarioController]: Constructor threw exception
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:224) ~[spring-beans-7.0.0-RC3.jar:7.0.0-RC3]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:106) ~[spring-beans-7.0.0-RC3.jar:7.0.0-RC3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1338) ~[spring-beans-7.0.0-RC3.jar:7.0.0-RC3]
+	... 19 common frames omitted
+Caused by: java.lang.Error: Unresolved compilation problems: 
+	The method setFechaRegistro(LocalDateTime) is undefined for the type Usuario
+	The method getNombre() is undefined for the type Usuario
+	The method getEmail() is undefined for the type Usuario
+	The method getContrasena() is undefined for the type Usuario
+	The method getTipoUsuario() is undefined for the type Usuario
+
+	at com.biblioteca.libreria.controller.UsuarioController.<init>(UsuarioController.java:33) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480) ~[na:na]
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:198) ~[spring-beans-7.0.0-RC3.jar:7.0.0-RC3]
+	... 21 common frames omitted
+

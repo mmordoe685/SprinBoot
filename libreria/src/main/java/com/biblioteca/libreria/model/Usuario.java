@@ -14,7 +14,7 @@ public class Usuario {
 
     private String nombre;
     private String email;
-    private String contraseña;
+    private String contrasena;
     private String tipoUsuario;
     private LocalDateTime fechaRegistro;
 
@@ -24,5 +24,71 @@ public class Usuario {
     @ManyToMany(mappedBy = "usuariosBiblioteca")
     private List<Libro> bibliotecaPersonal;
 
-     //Getters y setters
+    // =============================
+    //       GETTERS & SETTERS
+    // =============================
+
+    public Integer getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public String getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(String tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
+    public LocalDateTime getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(LocalDateTime fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
+    }
+
+    public List<Compra> getCompras() {
+        return compras;
+    }
+
+    public void setCompras(List<Compra> compras) {
+        this.compras = compras;
+    }
+
+    public List<Libro> getBibliotecaPersonal() {
+        return bibliotecaPersonal;
+    }
+
+    public void setBibliotecaPersonal(List<Libro> bibliotecaPersonal) {
+        this.bibliotecaPersonal = bibliotecaPersonal;
+    }
 }
