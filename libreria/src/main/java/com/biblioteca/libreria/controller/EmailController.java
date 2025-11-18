@@ -1,6 +1,6 @@
 package com.biblioteca.libreria.controller;
 
-import com.biblioteca.libreria.service.EmailService;
+import com.biblioteca.libreria.Service.EmailService;
 import org.springframework.web.bind.annotation.*;
 
 /**

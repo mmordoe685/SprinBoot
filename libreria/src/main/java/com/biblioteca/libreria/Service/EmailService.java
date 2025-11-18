@@ -1,4 +1,4 @@
-package com.biblioteca.libreria.service;
+package com.biblioteca.libreria.Service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
