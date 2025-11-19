@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Biblioteca Digital</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial;
+            margin: 0;
+            background: #f6f7f9;
+            color: #333;
+        }
+
+        header {
+            background: #1a237e;
+            color: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        header img.logo {
+            height: 45px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Carrito */
+        #carritoBtn img {
+            width: 40px;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+
+        .hero {
+            padding: 80px 30px;
+            text-align: center;
+            background: linear-gradient(to right, #3f51b5, #1a237e);
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 45px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            opacity: .9;
+        }
+
+        .section {
+            padding: 60px 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 30px;
+            color: #1a237e;
+        }
+
+        .categorias, .libros-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .categorias {
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        }
+
+        .categoria-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .categoria-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .libros-grid {
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+
+        .libro-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+
+        .libro-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .libro-card h3 {
+            margin: 10px 0;
+        }
+
+        footer {
+            background: #1a237e;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        /* Botón Admin */
+        #adminBtn {
+            background-color: #ff9800; 
+            border: none; 
+            padding: 10px 20px; 
+            color: white; 
+            font-weight: bold; 
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* Modal admin */
+        #adminModal {
+            display:none; 
+            position:fixed; 
+            top:0; left:0; 
+            width:100%; height:100%; 
+            background:rgba(0,0,0,0.6); 
+            justify-content:center; 
+            align-items:center;
+        }
+
+        #adminModal div {
+            background:white; 
+            padding:30px; 
+            border-radius:10px; 
+            width:300px; 
+            text-align:center;
+            position:relative;
+        }
+
+        #closeModal {
+            position:absolute; 
+            top:10px; right:15px; 
+            cursor:pointer; 
+            font-weight:bold;
+            font-size:18px;
+        }
+
+        #loginAdmin {
+            background-color:#1a237e; 
+            color:white; 
+            border:none; 
+            padding:8px 15px; 
+            border-radius:5px;
+            cursor:pointer;
+        }
+
+        input {
+            width:90%; 
+            padding:5px; 
+            margin:10px 0;
+        }
+
+        #errorMsg {
+            color:red; 
+            display:none; 
+            margin-top:10px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div style="display:flex; align-items:center; gap:15px;">
+        <img th:src="@{/logo.png}" class="logo" alt="Logo">
+        <h2 style="margin:0;">Biblioteca Digital</h2>
+    </div>
+
+    <nav>
+        <!-- Carrito a la izquierda de "Inicio" -->
+        <a href="/carrito" id="carritoBtn">
+            <img th:src="@{/carrito.png}" alt="Carrito">
+        </a>
+        <a href="#">Inicio</a>
+        <a href="#">Catálogo</a>
+        <a href="#">login</a>
+        <a href="#">Mi Cuenta</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1 th:text="'Bienvenido ' + ${usuario} + ' a la Biblioteca Digital'">Bienvenido a la Biblioteca</h1>
+    <p>Accede a miles de libros, artículos y recursos digitales en un solo lugar.</p>
+</section>
+
+<section class="section">
+    <h2>Categorías</h2>
+    <div class="categorias">
+        <div class="categoria-card">Novela</div>
+        <div class="categoria-card">Ciencia</div>
+        <div class="categoria-card">Tecnología</div>
+        <div class="categoria-card">Historia</div>
+        <div class="categoria-card">Fantasía</div>
+        <div class="categoria-card">Infantil</div>
+    </div>
+</section>
+
+<section class="section">
+    <h2>Libros destacados</h2>
+    <div class="libros-grid">
+        <div class="libro-card" th:each="libro : ${librosDestacados}">
+            <h3 th:text="${libro.titulo}">Título del libro</h3>
+            <p th:text="'Autor: ' + ${libro.autor}">Autor</p>
+            <p th:text="${libro.descripcion}">Descripción</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    Biblioteca Digital © 2025 • Todos los derechos reservados
+    <br>
+    <button id="adminBtn">Admin</button>
+</footer>
+
+<!-- Modal de login admin -->
+<div id="adminModal">
+    <div>
+        <span id="closeModal">X</span>
+        <h3>Ingreso Admin</h3>
+        <input type="text" id="adminUser" placeholder="Usuario"><br>
+        <input type="password" id="adminPass" placeholder="Contraseña"><br>
+        <button id="loginAdmin">Ingresar</button>
+        <p id="errorMsg">Credenciales incorrectas</p>
+    </div>
+</div>
+
+<script>
+    const adminBtn = document.getElementById('adminBtn');
+    const modal = document.getElementById('adminModal');
+    const closeModal = document.getElementById('closeModal');
+    const loginAdmin = document.getElementById('loginAdmin');
+    const errorMsg = document.getElementById('errorMsg');
+
+    adminBtn.onclick = () => modal.style.display = 'flex';
+    closeModal.onclick = () => { modal.style.display = 'none'; errorMsg.style.display = 'none'; }
+
+    loginAdmin.onclick = () => {
+        const user = document.getElementById('adminUser').value;
+        const pass = document.getElementById('adminPass').value;
+
+        const ADMIN_USER = "admin";
+        const ADMIN_PASS = "12345";
+
+        if(user === ADMIN_USER && pass === ADMIN_PASS){
+            window.location.href = "/panel_admin";
+        } else {
+            errorMsg.style.display = 'block';
+        }
+    }
+
+    window.onclick = function(event) {
+        if(event.target == modal) {
+            modal.style.display = "none";
+            errorMsg.style.display = 'none';
+        }
+    }
+</script>
+
+</body>
+</html>
