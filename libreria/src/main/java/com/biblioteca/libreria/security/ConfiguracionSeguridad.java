@@ -1,4 +1,4 @@
-package com.biblioteca.libreria.seguridad;
+package com.biblioteca.libreria.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
