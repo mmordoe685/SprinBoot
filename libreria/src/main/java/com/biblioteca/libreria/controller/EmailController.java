@@ -31,12 +31,8 @@ public class EmailController {
     /**
      * Endpoint para enviar un correo de bienvenida tras un nuevo registro.
      *
-     * Se puede probar realizando una petición POST a:
-     * /api/mail/registro?to=correo@ejemplo.com&username=NombreUsuario
-     *
-     * @param to       dirección de correo del destinatario
-     * @param username nombre del usuario registrado
-     * @return mensaje de confirmación en texto plano
+     * Ejemplo:
+     * POST /api/mail/registro?to=correo@ejemplo.com&username=NombreUsuario
      */
     @PostMapping("/registro")
     public String sendRegistro(@RequestParam String to,
@@ -48,13 +44,8 @@ public class EmailController {
     /**
      * Endpoint para enviar un correo de confirmación de cuenta.
      *
-     * Ejemplo de uso:
-     * /api/mail/confirmacion?to=correo@ejemplo.com&username=NombreUsuario&token=abc123
-     *
-     * @param to       dirección de correo del destinatario
-     * @param username nombre del usuario
-     * @param token    token de confirmación generado previamente
-     * @return mensaje de confirmación en texto plano
+     * Ejemplo:
+     * POST /api/mail/confirmacion?to=correo@ejemplo.com&username=NombreUsuario&token=abc123
      */
     @PostMapping("/confirmacion")
     public String sendConfirmacion(@RequestParam String to,
@@ -67,13 +58,8 @@ public class EmailController {
     /**
      * Endpoint para enviar un correo de recuperación de contraseña.
      *
-     * Ejemplo de uso:
-     * /api/mail/recuperacion?to=correo@ejemplo.com&username=NombreUsuario&token=reset123
-     *
-     * @param to       dirección de correo del destinatario
-     * @param username nombre del usuario
-     * @param token    token de recuperación de contraseña
-     * @return mensaje de confirmación en texto plano
+     * Ejemplo:
+     * POST /api/mail/recuperacion?to=correo@ejemplo.com&username=NombreUsuario&token=reset123
      */
     @PostMapping("/recuperacion")
     public String sendRecuperacion(@RequestParam String to,
@@ -86,13 +72,8 @@ public class EmailController {
     /**
      * Endpoint para enviar un correo con un resumen de actividad.
      *
-     * Ejemplo de uso:
-     * /api/mail/resumen?to=correo@ejemplo.com&username=NombreUsuario&resumen=TextoResumen
-     *
-     * @param to       dirección de correo del destinatario
-     * @param username nombre del usuario
-     * @param resumen  resumen de la actividad que se desea enviar
-     * @return mensaje de confirmación en texto plano
+     * Ejemplo:
+     * POST /api/mail/resumen?to=correo@ejemplo.com&username=NombreUsuario&resumen=TextoResumen
      */
     @PostMapping("/resumen")
     public String sendResumen(@RequestParam String to,

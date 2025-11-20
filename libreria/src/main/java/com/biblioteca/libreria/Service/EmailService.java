@@ -168,9 +168,6 @@ public class EmailService {
     /**
      * Envío de un resumen de actividad al usuario.
      *
-     * Este resumen puede contener información sobre compras realizadas,
-     * libros añadidos a la biblioteca personal u otras acciones recientes.
-     *
      * @param to               dirección de correo del usuario
      * @param username         nombre del usuario
      * @param resumenActividad texto con el resumen de actividad que se desee enviar

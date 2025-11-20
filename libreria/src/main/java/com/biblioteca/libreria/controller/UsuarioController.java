@@ -1,5 +1,6 @@
 package com.biblioteca.libreria.controller;
 
+import com.biblioteca.libreria.Service.EmailService;
 import com.biblioteca.libreria.model.Usuario;
 import com.biblioteca.libreria.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class UsuarioController {
     @Autowired
     private UsuarioRepository repo;
 
+    @Autowired
+    private EmailService emailService;   //  inyectamos el servicio de email
+
     @GetMapping
     public List<Usuario> listar() {
         return repo.findAll();
@@ -30,8 +34,16 @@ public class UsuarioController {
 
     @PostMapping
     public Usuario crear(@RequestBody Usuario usuario) {
+        // guardamos fecha de registro
         usuario.setFechaRegistro(LocalDateTime.now());
-        return repo.save(usuario);
+
+        // guardamos en BD
+        Usuario nuevo = repo.save(usuario);
+
+        // enviamos correo de bienvenida
+        emailService.sendNewRegistrationEmail(nuevo.getEmail(), nuevo.getNombre());
+
+        return nuevo;
     }
 
     @PutMapping("/{id}")
