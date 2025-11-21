@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo usuario</title>
+
+    <!-- Bootstrap simple -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container py-4">
+
+    <h3>Nuevo usuario</h3>
+
+    <!-- FORMULARIO MUY SENCILLO -->
+    <form method="post"
+          enctype="multipart/form-data"
+          th:object="${usuario}"
+          th:action="@{/admin/usuarios/guardar}">
+
+        <!-- Campo ID oculto -->
+        <input type="hidden" th:field="*{idUsuario}"/>
+
+        <!-- NOMBRE -->
+        <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input class="form-control" th:field="*{nombre}" required>
+        </div>
+
+        <!-- EMAIL -->
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input class="form-control" th:field="*{email}" required>
+        </div>
+
+        <!-- CONTRASEÑA -->
+        <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+            <input class="form-control" type="password" th:field="*{contrasena}" required>
+        </div>
+
+        <!-- ROL -->
+        <div class="mb-3">
+            <label class="form-label">Rol</label>
+            <select class="form-select" th:field="*{tipoUsuario}">
+                <option value="USER">USER</option>
+                <option value="ADMIN">ADMIN</option>
+            </select>
+        </div>
+
+        <!-- PAÍS -->
+        <div class="mb-3">
+            <label class="form-label">País</label>
+            <input class="form-control" th:field="*{pais}">
+        </div>
+
+        <!-- FOTO -->
+        <div class="mb-3">
+            <label class="form-label">Foto (URL o archivo)</label>
+
+            <!-- URL -->
+            <input class="form-control mb-2"
+                   th:field="*{fotoUrl}"
+                   placeholder="https://... (opcional)">
+
+            <!-- Archivo -->
+            <input class="form-control" type="file" name="foto">
+
+            <small class="text-muted">
+                Si no pones nada, se usará la foto por defecto.
+            </small>
+        </div>
+
+        <!-- BOTONES -->
+        <button class="btn btn-primary" type="submit">Guardar</button>
+
+        <a class="btn btn-secondary" th:href="@{/admin/usuarios}">
+            Cancelar
+        </a>
+
+    </form>
+
+</div>
+
+</body>
+</html>
