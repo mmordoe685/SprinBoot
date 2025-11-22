@@ -4,83 +4,154 @@
     <meta charset="UTF-8">
     <title>Biblioteca Digital</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <style>
-        body {
-            font-family: 'Segoe UI', Arial;
-            margin: 0;
-            background: #f6f7f9;
-            color: #333;
+        :root {
+            --color-fondo: #f3f4f6;
+            --color-primario: #1d4ed8;
+            --color-primario-oscuro: #111827;
+            --color-acento: #f97316;
+            --color-texto: #111827;
+            --color-card: #ffffff;
+            --borde-suave: #e5e7eb;
         }
 
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            background: radial-gradient(circle at top, #e5e7eb, #f3f4f6);
+            color: var(--color-texto);
+        }
+
+        /* HEADER */
         header {
-            background: #1a237e;
+            background: var(--color-primario-oscuro);
             color: white;
-            padding: 15px 40px;
+            padding: 14px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
         }
 
         header img.logo {
-            height: 45px;
+            height: 48px;
+        }
+
+        header h2 {
+            margin: 0;
+            font-size: 22px;
+            letter-spacing: 0.5px;
         }
 
         nav {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 18px;
         }
 
         nav a {
-            color: white;
+            color: #e5e7eb;
             text-decoration: none;
             font-weight: 500;
+            font-size: 15px;
+            position: relative;
+            padding-bottom: 2px;
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 2px;
+            width: 0;
+            background: var(--color-primario);
+            transition: width 0.25s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
         }
 
         nav a:hover {
-            opacity: 0.8;
+            color: #ffffff;
         }
 
         /* Carrito */
         #carritoBtn img {
-            width: 40px;
+            width: 34px;
             vertical-align: middle;
             cursor: pointer;
+            filter: drop-shadow(0 0 4px rgba(15,23,42,0.4));
         }
 
+        /* HERO */
         .hero {
-            padding: 80px 30px;
+            padding: 80px 20px 70px;
             text-align: center;
-            background: linear-gradient(to right, #3f51b5, #1a237e);
+            background: linear-gradient(120deg, #1d4ed8, #6366f1, #4f46e5);
             color: white;
+            box-shadow: 0 14px 35px rgba(15, 23, 42, 0.45);
         }
 
         .hero h1 {
-            font-size: 45px;
-            margin-bottom: 10px;
+            font-size: 42px;
+            margin-bottom: 12px;
         }
 
         .hero p {
-            font-size: 20px;
-            opacity: .9;
+            font-size: 18px;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto 22px;
         }
 
+        .hero .hero-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 22px;
+            border-radius: 999px;
+            background: #ffffff;
+            color: var(--color-primario-oscuro);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 15px;
+            box-shadow: 0 10px 20px rgba(15,23,42,0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .hero .hero-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 26px rgba(15,23,42,0.5);
+        }
+
+        /* SECCIONES */
         .section {
-            padding: 60px 30px;
+            padding: 55px 24px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .section h2 {
             text-align: center;
-            margin-bottom: 30px;
-            font-size: 30px;
-            color: #1a237e;
+            margin-bottom: 26px;
+            font-size: 28px;
+            color: var(--color-primario-oscuro);
         }
 
-        .categorias, .libros-grid {
+        .categorias,
+        .libros-grid {
             display: grid;
             gap: 20px;
         }
@@ -90,133 +161,193 @@
         }
 
         .categoria-card {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
+            background: var(--color-card);
+            padding: 22px 20px;
+            border-radius: 14px;
             text-align: center;
             font-weight: 600;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            border: 1px solid var(--borde-suave);
+            box-shadow: 0 10px 20px rgba(15,23,42,0.06);
             cursor: pointer;
-            transition: 0.3s;
+            transition: transform 0.25s ease, box-shadow 0.25s ease,
+                        border-color 0.25s ease;
         }
 
         .categoria-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 30px rgba(15,23,42,0.12);
+            border-color: var(--color-primario);
         }
 
         .libros-grid {
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
         }
 
         .libro-card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-            transition: 0.3s;
+            background: var(--color-card);
+            border-radius: 14px;
+            padding: 18px 18px 20px;
+            border: 1px solid var(--borde-suave);
+            box-shadow: 0 10px 22px rgba(15,23,42,0.08);
+            transition: transform 0.25s ease, box-shadow 0.25s ease,
+                        border-color 0.25s ease;
         }
 
         .libro-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 30px rgba(15,23,42,0.16);
+            border-color: var(--color-primario);
         }
 
         .libro-card h3 {
-            margin: 10px 0;
+            margin: 6px 0 4px;
+            font-size: 18px;
         }
 
+        .libro-card p {
+            margin: 4px 0;
+            font-size: 14px;
+            color: #4b5563;
+        }
+
+        /* FOOTER */
         footer {
-            background: #1a237e;
+            background: #020617;
             padding: 20px;
-            color: white;
+            color: #9ca3af;
             text-align: center;
             margin-top: 50px;
+            font-size: 14px;
         }
 
-        /* Botón Admin */
+        footer strong {
+            color: #e5e7eb;
+        }
+
         #adminBtn {
-            background-color: #ff9800; 
-            border: none; 
-            padding: 10px 20px; 
-            color: white; 
-            font-weight: bold; 
-            border-radius: 5px;
+            background-color: var(--color-acento);
+            border: none;
+            padding: 9px 18px;
+            color: white;
+            font-weight: 600;
+            border-radius: 999px;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 12px;
+            font-size: 13px;
+            box-shadow: 0 8px 18px rgba(248, 113, 11, 0.45);
+            transition: transform 0.2s ease, box-shadow 0.2s ease,
+                        background-color 0.2s ease;
         }
 
-        /* Modal admin */
+        #adminBtn:hover {
+            background-color: #ea580c;
+            transform: translateY(-1px);
+            box-shadow: 0 12px 24px rgba(248, 113, 11, 0.6);
+        }
+
+        /* MODAL ADMIN */
         #adminModal {
-            display:none; 
-            position:fixed; 
-            top:0; left:0; 
-            width:100%; height:100%; 
-            background:rgba(0,0,0,0.6); 
-            justify-content:center; 
-            align-items:center;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15,23,42,0.6);
+            justify-content: center;
+            align-items: center;
         }
 
         #adminModal div {
-            background:white; 
-            padding:30px; 
-            border-radius:10px; 
-            width:300px; 
-            text-align:center;
-            position:relative;
+            background: #ffffff;
+            padding: 26px 26px 22px;
+            border-radius: 14px;
+            width: 300px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 18px 40px rgba(15,23,42,0.35);
         }
 
         #closeModal {
-            position:absolute; 
-            top:10px; right:15px; 
-            cursor:pointer; 
-            font-weight:bold;
-            font-size:18px;
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 18px;
+            color: #6b7280;
+        }
+
+        #closeModal:hover {
+            color: #111827;
         }
 
         #loginAdmin {
-            background-color:#1a237e; 
-            color:white; 
-            border:none; 
-            padding:8px 15px; 
-            border-radius:5px;
-            cursor:pointer;
+            background-color: var(--color-primario);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 6px;
+        }
+
+        #loginAdmin:hover {
+            background-color: #1e40af;
         }
 
         input {
-            width:90%; 
-            padding:5px; 
-            margin:10px 0;
+            width: 100%;
+            padding: 6px 8px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: 1px solid var(--borde-suave);
+            font-size: 14px;
         }
 
         #errorMsg {
-            color:red; 
-            display:none; 
-            margin-top:10px;
+            color: #dc2626;
+            display: none;
+            margin-top: 8px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 12px 18px; }
+            nav { gap: 10px; font-size: 14px; }
+            .hero h1 { font-size: 30px; }
+            .hero p { font-size: 16px; }
         }
     </style>
 </head>
 <body>
 
 <header>
-    <div style="display:flex; align-items:center; gap:15px;">
-        <img th:src="@{/logo.png}" class="logo" alt="Logo">
-        <h2 style="margin:0;">Biblioteca Digital</h2>
+    <div class="header-left">
+        <!-- Logo: static/logo.png -->
+        <img th:src="@{/logo.png}" class="logo" alt="Logo Biblioteca">
+        <h2>Biblioteca Digital</h2>
     </div>
 
     <nav>
-        <!-- Carrito a la izquierda de "Inicio" -->
-        <a href="/carrito" id="carritoBtn">
-            <img th:src="@{/carrito.png}" alt="Carrito">
+        <!-- Carrito: te lleva a /carrito (Carrito.html) -->
+        <a th:href="@{/carrito}" id="carritoBtn" title="Ver carrito">
+            <img th:src="@{/carrito.png}" alt="Carrito de la compra">
         </a>
         <a href="#">Inicio</a>
         <a href="#">Catálogo</a>
-        <a href="#">login</a>
+        <a href="#">Login</a>
         <a href="#">Mi Cuenta</a>
     </nav>
 </header>
 
 <section class="hero">
-    <h1 th:text="'Bienvenido ' + ${usuario} + ' a la Biblioteca Digital'">Bienvenido a la Biblioteca</h1>
+    <h1 th:text="'Bienvenido ' + ${usuario} + ' a la Biblioteca Digital'">
+        Bienvenido a la Biblioteca Digital
+    </h1>
     <p>Accede a miles de libros, artículos y recursos digitales en un solo lugar.</p>
+    <a href="#" class="hero-btn">Explorar catálogo</a>
 </section>
 
 <section class="section">
@@ -243,9 +374,9 @@
 </section>
 
 <footer>
-    Biblioteca Digital © 2025 • Todos los derechos reservados
+    <strong>Biblioteca Digital © 2025</strong> • Todos los derechos reservados
     <br>
-    <button id="adminBtn">Admin</button>
+    <button id="adminBtn">Zona Admin</button>
 </footer>
 
 <!-- Modal de login admin -->
@@ -253,8 +384,8 @@
     <div>
         <span id="closeModal">X</span>
         <h3>Ingreso Admin</h3>
-        <input type="text" id="adminUser" placeholder="Usuario"><br>
-        <input type="password" id="adminPass" placeholder="Contraseña"><br>
+        <input type="text" id="adminUser" placeholder="Usuario">
+        <input type="password" id="adminPass" placeholder="Contraseña">
         <button id="loginAdmin">Ingresar</button>
         <p id="errorMsg">Credenciales incorrectas</p>
     </div>
@@ -268,7 +399,11 @@
     const errorMsg = document.getElementById('errorMsg');
 
     adminBtn.onclick = () => modal.style.display = 'flex';
-    closeModal.onclick = () => { modal.style.display = 'none'; errorMsg.style.display = 'none'; }
+
+    closeModal.onclick = () => {
+        modal.style.display = 'none';
+        errorMsg.style.display = 'none';
+    };
 
     loginAdmin.onclick = () => {
         const user = document.getElementById('adminUser').value;
@@ -277,19 +412,19 @@
         const ADMIN_USER = "admin";
         const ADMIN_PASS = "12345";
 
-        if(user === ADMIN_USER && pass === ADMIN_PASS){
+        if (user === ADMIN_USER && pass === ADMIN_PASS) {
             window.location.href = "/panel_admin";
         } else {
             errorMsg.style.display = 'block';
         }
-    }
+    };
 
-    window.onclick = function(event) {
-        if(event.target == modal) {
+    window.onclick = function (event) {
+        if (event.target === modal) {
             modal.style.display = "none";
             errorMsg.style.display = 'none';
         }
-    }
+    };
 </script>
 
 </body>
