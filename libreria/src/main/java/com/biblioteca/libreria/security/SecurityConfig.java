@@ -66,91 +66,79 @@ public class SecurityConfig {
      *  - A dónde redirigir (perfil o admin).
      */
     @Bean
-    public AuthenticationSuccessHandler successHandler() {
-        return (request, response, authentication) -> {
+public AuthenticationSuccessHandler successHandler() {
+    return (request, response, authentication) -> {
+        String email = null;
+        String nombre = null;
 
-            String email = null;
-            String nombre = null;
+        // 1) Si el login ha sido con Google o GitHub (OAuth2)
+        if (authentication instanceof OAuth2AuthenticationToken) {
+            OAuth2AuthenticationToken oAuth2Token = (OAuth2AuthenticationToken) authentication;
+            var attrs = oAuth2Token.getPrincipal().getAttributes();
+            String registrationId = oAuth2Token.getAuthorizedClientRegistrationId();
 
-            // 1) Si el login ha sido con Google o GitHub (OAuth2)
-            if (authentication instanceof OAuth2AuthenticationToken) {
-
-                OAuth2AuthenticationToken oAuth2Token =
-                        (OAuth2AuthenticationToken) authentication;
-
-                // Atributos que vienen del proveedor (Google/GitHub)
-                var attrs = oAuth2Token.getPrincipal().getAttributes();
-
-                // Nombre del proveedor: "google" o "github"
-                String registrationId = oAuth2Token.getAuthorizedClientRegistrationId();
-
-                if ("google".equalsIgnoreCase(registrationId)) {
-                    // Google suele enviar "email" y "name"
-                    email = (String) attrs.get("email");
-                    nombre = (String) attrs.get("name");
-
-                } else if ("github".equalsIgnoreCase(registrationId)) {
-                    // En GitHub, el email puede ser null si es privado
-                    email = (String) attrs.get("email");
-                    String login = (String) attrs.get("login"); // nick de GitHub
-
-                    if (email == null && login != null) {
-                        // Si no tenemos email real, inventamos uno interno
-                        email = login + "@github.local";
-                    }
-
-                    nombre = (String) attrs.get("name");
-
-                    // Si no viene "name", usamos el login como nombre
-                    if (nombre == null) {
-                        nombre = login;
-                    }
+            if ("google".equalsIgnoreCase(registrationId)) {
+                email = (String) attrs.get("email");
+                nombre = (String) attrs.get("name");
+            } else if ("github".equalsIgnoreCase(registrationId)) {
+                email = (String) attrs.get("email");
+                String login = (String) attrs.get("login"); // nick de GitHub
+                if (email == null && login != null) {
+                    email = login + "@github.local";
                 }
-
-            } else {
-                // 2) Si el login ha sido con el formulario normal
-                //    Spring pone el "username" aquí, que en nuestro caso es el email
-                email = authentication.getName();
+                nombre = (String) attrs.get("name");
+                if (nombre == null) {
+                    nombre = login;
+                }
             }
+        } else {
+            // 2) Si el login ha sido con el formulario normal
+            email = authentication.getName();
+        }
 
-            // 3) Buscar el usuario en la BD por su email
-            Usuario usuario = null;
-            if (email != null) {
-                usuario = usuarioRepository.findByEmail(email).orElse(null);
-            }
+        // 3) Buscar el usuario en la BD por su email
+        Usuario usuario = null;
+        if (email != null) {
+            usuario = usuarioRepository.findByEmail(email).orElse(null);
+        }
 
-            // 4) Si no existe en la BD y tenemos email, lo creamos
-            if (usuario == null && email != null) {
-                usuario = new Usuario();
-                usuario.setEmail(email);
-                usuario.setNombre(nombre);
-                usuario.setTipoUsuario("USER"); // Por defecto, todos son USER
-                usuario.setFechaRegistro(LocalDateTime.now());
+        // 4) Si no existe en la BD y tenemos email, lo creamos
+        if (usuario == null && email != null) {
+            usuario = new Usuario();
+            usuario.setEmail(email);
+            usuario.setNombre(nombre);
+            usuario.setTipoUsuario("USER"); // Por defecto, todos son USER
+            usuario.setFechaRegistro(LocalDateTime.now());
+            usuario = usuarioRepository.save(usuario);
+        }
 
-                usuario = usuarioRepository.save(usuario);
-            }
+        // 5) Si el usuario no existe o no tiene contraseña -> completar-registro
+        if (usuario == null || usuario.getContrasena() == null) {
+            response.sendRedirect("/completar-registro");
+            return;
+        }
 
-            // 5) Si el usuario no existe o no tiene contraseña -> completar-registro
-            // (caso típico de login por Google/GitHub la primera vez)
-            if (usuario == null || usuario.getContrasena() == null) {
-                response.sendRedirect("/completar-registro");
-                return;
-            }
+        // 6) Si el usuario tiene rol USER, redirigir a catalogo.html
+        boolean esUser = authentication.getAuthorities()
+                .stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_USER"));
 
-            // 6) Si ya tiene contraseña, lo enviamos a:
-            //    - /admin si tiene ROLE_ADMIN
-            //    - /perfil si no
+        if (esUser) {
+            response.sendRedirect("/catalogo");  // Redirige al catálogo si el usuario es de tipo USER
+        } else {
+            // Si el usuario es admin, redirige al admin
             boolean esAdmin = authentication.getAuthorities()
                     .stream()
                     .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-
             if (esAdmin) {
                 response.sendRedirect("/admin");
             } else {
                 response.sendRedirect("/perfil");
             }
-        };
-    }
+        }
+    };
+}
+
 
     /**
      * Configuración principal de la seguridad HTTP:
@@ -168,6 +156,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // Recursos públicos (CSS, JS, imágenes...), login, registro, OAuth2...
                 .requestMatchers(
+                     "/", "/index.html",
                         "/css/**", "/js/**", "/images/**", "/uploads/**",
                         "/login", "/registro",
                         "/oauth2/**", "/error"

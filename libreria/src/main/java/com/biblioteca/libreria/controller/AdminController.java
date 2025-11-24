@@ -282,4 +282,10 @@ public class AdminController {
     private String value(String s) {
         return (s == null) ? "" : s;
     }
+
+       @GetMapping("/")
+    public String inicio() {
+        return "index"; // Redirige a src/main/resources/templates/index.html
+    }
 }
+
