@@ -1,8 +1,8 @@
 
 
-# 📚 **Proyecto Spring Boot — Plataforma de Gestión de Biblioteca**
+#  **Proyecto Spring Boot — Plataforma de Gestión de Biblioteca**
 
-## 📌 **Descripción del Proyecto**
+##  **Descripción del Proyecto**
 
 Este proyecto consiste en el desarrollo de una **plataforma de gestión de biblioteca** creada con **Spring Boot**, que permite administrar libros, autores, categorías, usuarios y préstamos.
 El sistema implementa un **módulo de autenticación avanzado**, integración con **APIs externas**, panel de administración, dashboards personalizados y utilidades de exportación de datos.
@@ -11,9 +11,9 @@ La temática elegida es la **gestión bibliotecaria**, proporcionando tanto herr
 
 ---
 
-# ✅ **Funcionalidades Implementadas**
+#  **Funcionalidades Implementadas**
 
-### 🔐 **1. Sistema de Autenticación y Autorización**
+###  **1. Sistema de Autenticación y Autorización**
 
 * Login mediante **OAuth2** con Google y GitHub.
 * Gestión de 3 roles:
@@ -27,7 +27,7 @@ La temática elegida es la **gestión bibliotecaria**, proporcionando tanto herr
 
 ---
 
-### 🌐 **2. Integración de APIs Externas**
+###  **2. Integración de APIs Externas**
 
 #### 🔹 API Obligatoria — Email (SendGrid / MailJet)
 
@@ -43,13 +43,13 @@ Utilizada para:
 Usada para poder gestionar desde el panel de administración los usuarios registrados, 
 tanto los normales como los admins.
 
-#### 🔹 API Adicional #2 — 
+#### 🔹 API Adicional #2 — Gestión de Datos
 
 
 
-### 🛠️ **3. Funcionalidades Adicionales**
+###  **3. Funcionalidades Adicionales**
 
-#### 📊 3.1 Panel de Administración
+####  3.1 Panel de Administración
 
 Incluye:
 
@@ -58,7 +58,7 @@ Incluye:
 * Gestión de usuarios (activar/desactivar).
 * Historial de logs del sistema.
 
-#### 📤 3.2 Sistema de Exportación
+####  3.2 Sistema de Exportación
 
 Exportación de datos filtrados por:
 
@@ -70,13 +70,13 @@ Formatos:
 
 * **Excel/CSV** con todos los campos.
 
-#### 🔎 3.3 Búsqueda y Filtrado Avanzado
+####  3.3 Búsqueda y Filtrado Avanzado
 
 * Búsqueda por múltiples campos.
 * Rango de fechas.
 * Ordenación dinámica.
 
-#### 🏠 3.5 Dashboard Personalizado
+####  3.5 Dashboard Personalizado
 
 Cada usuario cuenta con:
 
@@ -86,7 +86,7 @@ Cada usuario cuenta con:
 
 ---
 
-# 🧱 **Requisitos Técnicos Implementados**
+#  **Requisitos Técnicos Implementados**
 
 * Arquitectura MVC con servicios, repositorios y controladores separados.
 * Plantillas con **Thymeleaf + Bootstrap** (responsive).
@@ -98,7 +98,7 @@ Cada usuario cuenta con:
 
 ---
 
-# 🧪 **Instrucciones de Instalación y Configuración**
+#  **Instrucciones de Instalación y Configuración**
 
 ## 1️⃣ **Requisitos previos**
 
@@ -163,33 +163,33 @@ spring.security.oauth2.client.registration.github.scope=user:email
 
 La aplicación estará disponible en:
 
-👉 **[http://localhost:8081](http://localhost:8081)**
+ **[http://localhost:8081](http://localhost:8081)**
 
 ---
 
-# 👤 **Credenciales de Prueba (todos los roles)**
+#  **Credenciales de Prueba (todos los roles)**
 
-### 🛡️ **Administrador**
+###  **Administrador**
 
 ```
 usuario: admin
 password: 12345
 ```
 
-### 👨‍💼 **Usuario Registrado**
+###  **Usuario Registrado**
 
 ```
 email: ejemplo@+++.++
 password: ejemplo
 ```
 
-### 👤 **Invitado**
+###  **Invitado**
 
 No necesita credenciales — acceso público.
 
 ---
 
-# 🖼️ **Capturas de Pantalla**
+#  **Capturas de Pantalla**
 
 
 ---
