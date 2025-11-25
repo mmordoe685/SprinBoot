@@ -49,6 +49,11 @@
                         Credenciales incorrectas.
                     </div>
 
+                    <!--  NUEVO: mensaje cuando se ha cambiado la contraseña -->
+                    <div th:if="${param.resetOk}" class="alert alert-success">
+                        Tu contraseña se ha actualizado correctamente. Ya puedes iniciar sesión.
+                    </div>
+
                     <div th:if="${registroOk}" class="alert alert-success"
                          th:text="${registroOk}"></div>
 
@@ -80,6 +85,17 @@
                             <button class="btn btn-primary w-100">
                                 Entrar
                             </button>
+
+                            <!--  NUEVO: botón de "¿Olvidaste tu contraseña?" -->
+                            <button type="button"
+                                    id="btn-forgot-password"
+                                    class="btn btn-link w-100 mt-2 p-0">
+                                ¿Olvidaste tu contraseña?
+                            </button>
+
+                            <!--  NUEVO: zona para mensajes de info / error -->
+                            <div id="forgot-info" class="mt-2 small"></div>
+
                         </form>
 
                         <hr>
@@ -151,7 +167,7 @@
 
 </div>
 
-<!-- JS SUPER SIMPLE PARA CAMBIAR ENTRE LOGIN Y REGISTRO -->
+<!-- JS SUPER SIMPLE PARA CAMBIAR ENTRE LOGIN Y REGISTRO + OLVIDAR CONTRASEÑA -->
 <script>
     const tabLogin = document.getElementById("tab-login");
     const tabRegistro = document.getElementById("tab-registro");
@@ -171,6 +187,63 @@
         panelLogin.style.display = "none";
         panelRegistro.style.display = "block";
     };
+
+    // ===============================
+    // "¿Olvidaste tu contraseña?"
+    // ===============================
+    const forgotBtn  = document.getElementById("btn-forgot-password");
+    const forgotInfo = document.getElementById("forgot-info");
+    const emailInput = document.querySelector('#panel-login input[name="email"]');
+
+    if (forgotBtn && forgotInfo && emailInput) {
+        forgotBtn.addEventListener("click", async () => {
+
+            const email = emailInput.value.trim();
+
+            // Si no ha escrito el correo, se lo pedimos
+            if (!email) {
+                forgotInfo.className = "mt-2 small text-danger";
+                forgotInfo.textContent = "Escribe primero tu correo en el campo de arriba.";
+                return;
+            }
+
+            // Preparamos los parámetros para la API de email
+            const params = new URLSearchParams();
+            // API: /api/mail/recuperacion con to, username, token
+            params.append("to", email);
+            params.append("username", email); // si no tienes nombre, usamos el correo
+            const token = (window.crypto && crypto.randomUUID)
+                ? crypto.randomUUID()
+                : Date.now().toString();
+            params.append("token", token);
+
+            try {
+                const response = await fetch("/api/mail/recuperacion", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: params.toString()
+                });
+
+                if (response.ok) {
+                    forgotInfo.className = "mt-2 small text-success";
+                    forgotInfo.textContent =
+                        "Si el correo existe en el sistema, se ha enviado un email para recuperar la contraseña.";
+                } else {
+                    forgotInfo.className = "mt-2 small text-danger";
+                    forgotInfo.textContent =
+                        "No se ha podido mandar el correo. Inténtalo más tarde.";
+                }
+
+            } catch (e) {
+                forgotInfo.className = "mt-2 small text-danger";
+                forgotInfo.textContent =
+                    "Error de conexión al enviar el correo de recuperación.";
+            }
+
+        });
+    }
 </script>
 
 </body>
