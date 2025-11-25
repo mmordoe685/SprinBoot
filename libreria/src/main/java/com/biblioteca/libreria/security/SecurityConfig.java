@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,7 +33,6 @@ public class SecurityConfig {
     /**
      * Codificador de contraseñas.
      * Ahora mismo usamos NoOp (NO encripta, solo para pruebas).
-     * Más adelante puedes cambiarlo a BCryptPasswordEncoder.
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -43,7 +41,7 @@ public class SecurityConfig {
 
     /**
      * Configura el AuthenticationManager para que use
-     * nuestro UserDetailsService (AccesoAdmin) y el passwordEncoder.
+     * nuestro UserDetailsService y el passwordEncoder.
      */
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
@@ -58,139 +56,125 @@ public class SecurityConfig {
     }
 
     /**
-     * Este handler se ejecuta cuando el login (form o OAuth2) ha ido BIEN.
-     * Aquí decidimos:
-     *  - Cómo obtener el email/nombre (según sea Google, GitHub o login normal).
-     *  - Si creamos el usuario en la BD si no existe.
-     *  - Si necesita completar registro (poner contraseña).
-     *  - A dónde redirigir (perfil o admin).
+     * SuccessHandler: qué pasa cuando el login va bien (formulario u OAuth2).
      */
     @Bean
-public AuthenticationSuccessHandler successHandler() {
-    return (request, response, authentication) -> {
-        String email = null;
-        String nombre = null;
+    public AuthenticationSuccessHandler successHandler() {
+        return (request, response, authentication) -> {
+            String email = null;
+            String nombre = null;
 
-        // 1) Si el login ha sido con Google o GitHub (OAuth2)
-        if (authentication instanceof OAuth2AuthenticationToken) {
-            OAuth2AuthenticationToken oAuth2Token = (OAuth2AuthenticationToken) authentication;
-            var attrs = oAuth2Token.getPrincipal().getAttributes();
-            String registrationId = oAuth2Token.getAuthorizedClientRegistrationId();
+            // 1) Login con Google / GitHub
+            if (authentication instanceof OAuth2AuthenticationToken oAuth2Token) {
+                var attrs = oAuth2Token.getPrincipal().getAttributes();
+                String registrationId = oAuth2Token.getAuthorizedClientRegistrationId();
 
-            if ("google".equalsIgnoreCase(registrationId)) {
-                email = (String) attrs.get("email");
-                nombre = (String) attrs.get("name");
-            } else if ("github".equalsIgnoreCase(registrationId)) {
-                email = (String) attrs.get("email");
-                String login = (String) attrs.get("login"); // nick de GitHub
-                if (email == null && login != null) {
-                    email = login + "@github.local";
+                if ("google".equalsIgnoreCase(registrationId)) {
+                    email = (String) attrs.get("email");
+                    nombre = (String) attrs.get("name");
+                } else if ("github".equalsIgnoreCase(registrationId)) {
+                    email = (String) attrs.get("email");
+                    String login = (String) attrs.get("login"); // nick de GitHub
+                    if (email == null && login != null) {
+                        email = login + "@github.local";
+                    }
+                    nombre = (String) attrs.get("name");
+                    if (nombre == null) {
+                        nombre = login;
+                    }
                 }
-                nombre = (String) attrs.get("name");
-                if (nombre == null) {
-                    nombre = login;
-                }
-            }
-        } else {
-            // 2) Si el login ha sido con el formulario normal
-            email = authentication.getName();
-        }
-
-        // 3) Buscar el usuario en la BD por su email
-        Usuario usuario = null;
-        if (email != null) {
-            usuario = usuarioRepository.findByEmail(email).orElse(null);
-        }
-
-        // 4) Si no existe en la BD y tenemos email, lo creamos
-        if (usuario == null && email != null) {
-            usuario = new Usuario();
-            usuario.setEmail(email);
-            usuario.setNombre(nombre);
-            usuario.setTipoUsuario("USER"); // Por defecto, todos son USER
-            usuario.setFechaRegistro(LocalDateTime.now());
-            usuario = usuarioRepository.save(usuario);
-        }
-
-        // 5) Si el usuario no existe o no tiene contraseña -> completar-registro
-        if (usuario == null || usuario.getContrasena() == null) {
-            response.sendRedirect("/completar-registro");
-            return;
-        }
-
-        // 6) Si el usuario tiene rol USER, redirigir a catalogo.html
-        boolean esUser = authentication.getAuthorities()
-                .stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_USER"));
-
-        if (esUser) {
-            response.sendRedirect("/catalogo");  // Redirige al catálogo si el usuario es de tipo USER
-        } else {
-            // Si el usuario es admin, redirige al admin
-            boolean esAdmin = authentication.getAuthorities()
-                    .stream()
-                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-            if (esAdmin) {
-                response.sendRedirect("/admin");
             } else {
-                response.sendRedirect("/perfil");
+                // 2) Login normal (formulario)
+                email = authentication.getName();
             }
-        }
-    };
-}
 
+            // 3) Buscar usuario en BD
+            Usuario usuario = null;
+            if (email != null) {
+                usuario = usuarioRepository.findByEmail(email).orElse(null);
+            }
+
+            // 4) Si no existe y tenemos email -> creamos USER por defecto
+            if (usuario == null && email != null) {
+                usuario = new Usuario();
+                usuario.setEmail(email);
+                usuario.setNombre(nombre);
+                usuario.setTipoUsuario("USER");
+                usuario.setFechaRegistro(LocalDateTime.now());
+                usuario = usuarioRepository.save(usuario);
+            }
+
+            // 5) Si no hay usuario o no tiene contraseña -> completar-registro
+            if (usuario == null || usuario.getContrasena() == null) {
+                response.sendRedirect("/completar-registro");
+                return;
+            }
+
+            // 6) Redirecciones según rol
+            boolean esUser = authentication.getAuthorities()
+                    .stream()
+                    .anyMatch(a -> a.getAuthority().equals("ROLE_USER"));
+
+            if (esUser) {
+                response.sendRedirect("/catalogo");
+            } else {
+                boolean esAdmin = authentication.getAuthorities()
+                        .stream()
+                        .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+                if (esAdmin) {
+                    response.sendRedirect("/admin");
+                } else {
+                    response.sendRedirect("/perfil");
+                }
+            }
+        };
+    }
 
     /**
-     * Configuración principal de la seguridad HTTP:
-     * - Qué URLs son públicas
-     * - Qué URLs necesitan estar logueado
-     * - Config de login normal
-     * - Config de login con OAuth2 (Google/GitHub)
-     * - Logout
+     * Configuración principal de seguridad HTTP.
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-            // Autorización de las distintas rutas
+            // Autorización de rutas
             .authorizeHttpRequests(auth -> auth
-                // Recursos públicos (CSS, JS, imágenes...), login, registro, OAuth2...
                 .requestMatchers(
-                     "/", "/index.html",
+                        "/", "/index.html",
                         "/css/**", "/js/**", "/images/**", "/uploads/**",
                         "/login", "/registro",
-                        "/oauth2/**", "/error"
+                        "/oauth2/**", "/error",
+                        "/api/mail/**",     // API de email accesible sin login
+                        "/reset-password"   // Formulario de reset accesible sin login (GET y POST)
                 ).permitAll()
-                // Rutas /admin solo para usuarios con rol ADMIN
                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                // Cualquier otra ruta requiere estar autenticado
                 .anyRequest().authenticated()
             )
 
-            // Configuración del login por formulario
+            // Login por formulario
             .formLogin(form -> form
-                .loginPage("/login").permitAll()     // Página de login personalizada
-                .usernameParameter("email")          // Campo "name" del input del email
-                .passwordParameter("password")       // Campo "name" del input de contraseña
-                .successHandler(successHandler())    // Qué pasa si el login va bien
+                .loginPage("/login").permitAll()
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .successHandler(successHandler())
             )
 
-            // Configuración del login con OAuth2 (Google/GitHub)
+            // Login con OAuth2 (Google/GitHub)
             .oauth2Login(oauth -> oauth
-                .loginPage("/login")                 // Usamos la misma página de login
+                .loginPage("/login")
                 .userInfoEndpoint(userInfo -> userInfo
-                    .userService(customGoogleInicioSesion) // Servicio que carga los datos de Google/GitHub
+                    .userService(customGoogleInicioSesion)
                 )
-                .successHandler(successHandler())    // Mismo success handler
+                .successHandler(successHandler())
             )
 
-            // Configuración del logout
+            // Logout
             .logout(logout -> logout
-                .logoutUrl("/logout")               // URL para hacer logout
-                .logoutSuccessUrl("/login?logout")  // A dónde vamos después de hacer logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout")
             )
 
-            // Para simplificar ahora, desactivamos CSRF (podrás activarlo más adelante)
+            // CSRF desactivado para simplificar
             .csrf(csrf -> csrf.disable());
 
         return http.build();
