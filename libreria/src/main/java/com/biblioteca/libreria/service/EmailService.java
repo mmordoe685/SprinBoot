@@ -140,8 +140,9 @@ public class EmailService {
      * @param resetToken token generado para la recuperación de contraseña
      */
     public void sendPasswordRecoveryEmail(String to, String username, String resetToken) {
-        // Construimos la URL de recuperación utilizando la URL base y el token
-        String resetUrl = baseUrl + "/reset-password?token=" + resetToken;
+        // Construimos la URL de recuperación utilizando la URL base, el token y el correo
+        // Ejemplo: http://localhost:8081/reset-password?token=abc123&email=correo@ejemplo.com
+        String resetUrl = baseUrl + "/reset-password?token=" + resetToken + "&email=" + to;
 
         String subject = "Recuperación de contraseña - Biblioteca Online";
 
