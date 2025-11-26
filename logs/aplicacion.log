@@ -1,0 +1,31 @@
+2025-11-26T17:23:18.092+01:00  INFO 12244 --- [libreria] [restartedMain] c.b.libreria.LibreriaApplication         : Starting LibreriaApplication using Java 21.0.9 with PID 12244 (C:\Users\david\Desktop\proyectoFinal\libreria\target\classes started by david in C:\Users\david\Desktop\proyectoFinal)
+2025-11-26T17:23:18.094+01:00  INFO 12244 --- [libreria] [restartedMain] c.b.libreria.LibreriaApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-11-26T17:23:18.170+01:00  INFO 12244 --- [libreria] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-11-26T17:23:18.184+01:00  INFO 12244 --- [libreria] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-11-26T17:23:19.681+01:00  INFO 12244 --- [libreria] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-26T17:23:19.770+01:00  INFO 12244 --- [libreria] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 69 ms. Found 3 JPA repository interfaces.
+2025-11-26T17:23:21.238+01:00  INFO 12244 --- [libreria] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-11-26T17:23:21.265+01:00  INFO 12244 --- [libreria] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-26T17:23:21.266+01:00  INFO 12244 --- [libreria] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
+2025-11-26T17:23:21.373+01:00  INFO 12244 --- [libreria] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-26T17:23:21.374+01:00  INFO 12244 --- [libreria] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3189 ms
+2025-11-26T17:23:21.904+01:00  INFO 12244 --- [libreria] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-26T17:23:21.979+01:00  INFO 12244 --- [libreria] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2025-11-26T17:23:22.020+01:00  INFO 12244 --- [libreria] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-11-26T17:23:22.443+01:00  INFO 12244 --- [libreria] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-26T17:23:22.477+01:00  INFO 12244 --- [libreria] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-11-26T17:23:22.834+01:00  INFO 12244 --- [libreria] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@ea8619f
+2025-11-26T17:23:22.836+01:00  INFO 12244 --- [libreria] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-11-26T17:23:22.909+01:00  WARN 12244 --- [libreria] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-26T17:23:24.065+01:00  INFO 12244 --- [libreria] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-26T17:23:24.154+01:00  INFO 12244 --- [libreria] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-26T17:23:24.881+01:00  WARN 12244 --- [libreria] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-26T17:23:24.998+01:00  INFO 12244 --- [libreria] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name accesoAdmin
+2025-11-26T17:23:25.182+01:00  INFO 12244 --- [libreria] [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2025-11-26T17:23:25.810+01:00  INFO 12244 --- [libreria] [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-11-26T17:23:26.661+01:00  INFO 12244 --- [libreria] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-26T17:23:26.745+01:00  INFO 12244 --- [libreria] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-11-26T17:23:26.761+01:00  INFO 12244 --- [libreria] [restartedMain] c.b.libreria.LibreriaApplication         : Started LibreriaApplication in 9.229 seconds (process running for 10.309)
+2025-11-26T17:29:04.371+01:00  INFO 12244 --- [libreria] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-26T17:29:04.371+01:00  INFO 12244 --- [libreria] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-11-26T17:29:04.372+01:00  INFO 12244 --- [libreria] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms

@@ -1,0 +1,44 @@
+2025-11-26T17:21:33.645+01:00  INFO 20536 --- [libreria] [main] c.b.libreria.LibreriaApplicationTests    : Starting LibreriaApplicationTests using Java 21.0.9 with PID 20536 (started by david in C:\Users\david\Desktop\proyectoFinal\libreria)
+2025-11-26T17:21:33.673+01:00  INFO 20536 --- [libreria] [main] c.b.libreria.LibreriaApplicationTests    : No active profile set, falling back to 1 default profile: "default"
+2025-11-26T17:21:35.318+01:00  INFO 20536 --- [libreria] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-26T17:21:35.411+01:00  INFO 20536 --- [libreria] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 80 ms. Found 3 JPA repository interfaces.
+2025-11-26T17:21:36.579+01:00  INFO 20536 --- [libreria] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-26T17:21:36.683+01:00  INFO 20536 --- [libreria] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2025-11-26T17:21:36.752+01:00  INFO 20536 --- [libreria] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-11-26T17:21:37.312+01:00  INFO 20536 --- [libreria] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-26T17:21:37.359+01:00  INFO 20536 --- [libreria] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-11-26T17:21:37.813+01:00  INFO 20536 --- [libreria] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@57b3d869
+2025-11-26T17:21:37.817+01:00  INFO 20536 --- [libreria] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-11-26T17:21:37.898+01:00  WARN 20536 --- [libreria] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-26T17:21:39.283+01:00  INFO 20536 --- [libreria] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-26T17:21:39.401+01:00  INFO 20536 --- [libreria] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-26T17:21:40.508+01:00  WARN 20536 --- [libreria] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-26T17:21:40.635+01:00  INFO 20536 --- [libreria] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name accesoAdmin
+2025-11-26T17:21:40.824+01:00  INFO 20536 --- [libreria] [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2025-11-26T17:21:41.628+01:00  INFO 20536 --- [libreria] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-11-26T17:21:43.201+01:00  INFO 20536 --- [libreria] [main] c.b.libreria.LibreriaApplicationTests    : Started LibreriaApplicationTests in 9.991 seconds (process running for 11.416)
+2025-11-26T17:21:43.917+01:00  INFO 20536 --- [libreria] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-11-26T17:21:43.920+01:00  INFO 20536 --- [libreria] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-11-26T17:21:43.935+01:00  INFO 20536 --- [libreria] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-11-26T17:21:44.314+01:00  INFO 11540 --- [libreria] [main] c.b.libreria.LibreriaApplicationTests    : Starting LibreriaApplicationTests using Java 21.0.9 with PID 11540 (started by david in C:\Users\david\Desktop\proyectoFinal\libreria)
+2025-11-26T17:21:44.316+01:00  INFO 11540 --- [libreria] [main] c.b.libreria.LibreriaApplicationTests    : No active profile set, falling back to 1 default profile: "default"
+2025-11-26T17:21:45.548+01:00  INFO 11540 --- [libreria] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-26T17:21:45.615+01:00  INFO 11540 --- [libreria] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 58 ms. Found 3 JPA repository interfaces.
+2025-11-26T17:21:46.721+01:00  INFO 11540 --- [libreria] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-26T17:21:46.853+01:00  INFO 11540 --- [libreria] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2025-11-26T17:21:46.904+01:00  INFO 11540 --- [libreria] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-11-26T17:21:47.458+01:00  INFO 11540 --- [libreria] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-26T17:21:47.498+01:00  INFO 11540 --- [libreria] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-11-26T17:21:47.875+01:00  INFO 11540 --- [libreria] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@24842b8e
+2025-11-26T17:21:47.877+01:00  INFO 11540 --- [libreria] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-11-26T17:21:47.938+01:00  WARN 11540 --- [libreria] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-26T17:21:49.091+01:00  INFO 11540 --- [libreria] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-26T17:21:49.179+01:00  INFO 11540 --- [libreria] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-26T17:21:50.051+01:00  WARN 11540 --- [libreria] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-26T17:21:50.175+01:00  INFO 11540 --- [libreria] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name accesoAdmin
+2025-11-26T17:21:50.371+01:00  INFO 11540 --- [libreria] [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2025-11-26T17:21:51.019+01:00  INFO 11540 --- [libreria] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-11-26T17:21:52.354+01:00  INFO 11540 --- [libreria] [main] c.b.libreria.LibreriaApplicationTests    : Started LibreriaApplicationTests in 8.426 seconds (process running for 9.648)
+2025-11-26T17:21:53.051+01:00  INFO 11540 --- [libreria] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-11-26T17:21:53.054+01:00  INFO 11540 --- [libreria] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-11-26T17:21:53.068+01:00  INFO 11540 --- [libreria] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

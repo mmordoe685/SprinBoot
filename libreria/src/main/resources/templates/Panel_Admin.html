@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Administración - Biblioteca</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body { background-color: #f8f9fa; }
+        .card-stats { text-align: center; padding: 20px; }
+        .log-box { background: #fff; padding: 10px; border-radius: 5px; max-height: 350px; overflow-y: auto; }
+        pre { white-space: pre-wrap; }
+    </style>
+</head>
+<body class="container py-4">
+
+    <h1 class="mb-4">Panel de Administración</h1>
+
+    <!-- ========================= -->
+    <!--        ESTADÍSTICAS       -->
+    <!-- ========================= -->
+    <h3>📊 Estadísticas del Sistema</h3>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card card-stats shadow-sm p-3">
+                <h5>Usuarios Activos</h5>
+                <h2 id="stat-usuarios">—</h2>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card card-stats shadow-sm p-3">
+                <h5>Compras</h5>
+                <h2 id="stat-compras">—</h2>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card card-stats shadow-sm p-3">
+                <h5>Registros (Logs)</h5>
+                <h2 id="stat-logs">—</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================= -->
+    <!--         GRÁFICOS          -->
+    <!-- ========================= -->
+    <h3>📈 Gráficos</h3>
+
+    <div class="row mb-4">
+        <div class="col-lg-8">
+            <div class="card shadow-sm p-3">
+                <h6>Actividad semanal</h6>
+                <canvas id="chartActividad"></canvas>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card shadow-sm p-3">
+            <h6>Distribución por categoría</h6>
+                <canvas id="chartCategorias"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================= -->
+    <!--     GESTIÓN USUARIOS      -->
+    <!-- ========================= -->
+    <h3>👤 Gestión de Usuarios</h3>
+
+    <table class="table table-striped shadow-sm bg-white">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Tipo</th>
+                <th>Estado</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody id="tablaUsuarios">
+            <tr><td colspan="6" class="text-center">Cargando...</td></tr>
+        </tbody>
+    </table>
+
+    <!-- ========================= -->
+    <!--         LOGS              -->
+    <!-- ========================= -->
+    <h3>📜 Logs del Sistema</h3>
+
+    <div class="log-box shadow-sm">
+        <div id="logsContainer">
+            <p class="text-muted text-center">Cargando logs...</p>
+        </div>
+    </div>
+
+    <div class="text-center mt-2">
+        <button id="loadMoreLogs" class="btn btn-outline-primary">Cargar más</button>
+    </div>
+
+    <!-- ========================= -->
+    <!--         JAVASCRIPT        -->
+    <!-- ========================= -->
+    <script>
+
+        /* =============================
+           CARGAR ESTADÍSTICAS
+        ============================= */
+        function cargarEstadisticas() {
+            fetch("/api/stats")
+                .then(r => r.json())
+                .then(data => {
+                    document.getElementById("stat-usuarios").innerText = data.usuariosActivos ?? 0;
+                    document.getElementById("stat-compras").innerText = data.totalCompras ?? 0;
+                    document.getElementById("stat-logs").innerText = data.totalLogs ?? 0;
+
+                    // Gráficos
+                    new Chart(document.getElementById("chartActividad"), {
+                        type: "line",
+                        data: {
+                            labels: data.fechasActividad ?? ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"],
+                            datasets: [{
+                                label: "Acciones",
+                                data: data.dataActividad ?? [5,9,7,14,6,3,8],
+                                fill: true
+                            }]
+                        }
+                    });
+
+                    new Chart(document.getElementById("chartCategorias"), {
+                        type: "doughnut",
+                        data: {
+                            labels: data.categorias ?? ["Ficción","Tecnología","Infantil","Ciencia"],
+                            datasets: [{
+                                data: data.dataCategorias ?? [12,8,5,4]
+                            }]
+                        }
+                    });
+                });
+        }
+
+        /* =============================
+           CARGAR USUARIOS
+        ============================= */
+        function cargarUsuarios() {
+            fetch("/api/usuarios")
+                .then(r => r.json())
+                .then(usuarios => {
+                    const tbody = document.getElementById("tablaUsuarios");
+                    tbody.innerHTML = "";
+
+                    usuarios.forEach(u => {
+                        let tr = document.createElement("tr");
+                        tr.innerHTML = `
+                            <td>${u.id}</td>
+                            <td>${u.nombre}</td>
+                            <td>${u.email}</td>
+                            <td>${u.tipoUsuario}</td>
+                            <td>${u.activo ? "Activo" : "Inactivo"}</td>
+                            <td>
+                                <button class="btn btn-sm btn-secondary" onclick="toggleUsuario(${u.id})">
+                                    ${u.activo ? "Desactivar" : "Activar"}
+                                </button>
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                });
+        }
+
+        function toggleUsuario(id) {
+            fetch(`/api/usuarios/${id}/toggle`, { method: "PATCH" })
+                .then(() => cargarUsuarios());
+        }
+
+        /* =============================
+           CARGAR LOGS
+        ============================= */
+        let paginaLogs = 0;
+
+        function cargarLogs(reset=false) {
+            if (reset) {
+                paginaLogs = 0;
+                document.getElementById("logsContainer").innerHTML = "";
+            }
+
+            fetch(`/api/logs?page=${paginaLogs}&size=30`)
+                .then(r => r.json())
+                .then(logs => {
+
+                    if (logs.length === 0) {
+                        document.getElementById("loadMoreLogs").style.display = "none";
+                        return;
+                    }
+
+                    const cont = document.getElementById("logsContainer");
+
+                    logs.forEach(log => {
+                        const div = document.createElement("div");
+                        div.className = "border-bottom pb-2 mb-2";
+                        div.innerHTML = `
+                            <strong>${log.operacion}</strong>
+                            <small class="text-muted">(${log.metodo})</small>
+                            <br>
+                            <small>${new Date(log.fecha).toLocaleString()}</small>
+                            <pre>${log.detalles}</pre>
+                        `;
+                        cont.appendChild(div);
+                    });
+
+                    paginaLogs++;
+                });
+        }
+
+        document.getElementById("loadMoreLogs").addEventListener("click", () => cargarLogs());
+
+        /* =============================
+           INIT
+        ============================= */
+        window.onload = () => {
+            cargarEstadisticas();
+            cargarUsuarios();
+            cargarLogs(true);
+        }
+
+    </script>
+
+</body>
+</html>
