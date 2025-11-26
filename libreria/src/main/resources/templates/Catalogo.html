@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Catálogo de libros</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+        body { background-color: #f5f6fa; }
+
+        .nav-bar {
+            background-color: #1a237e;
+            padding: 15px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-bar a {
+            color: white;
+            margin-left: 20px;
+            font-size: 17px;
+            text-decoration: none;
+        }
+        .nav-bar a:hover { opacity: 0.8; }
+
+        .card-libro {
+            border-radius: 12px;
+            transition: 0.3s;
+        }
+        .card-libro:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .card-libro img {
+            height: 220px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV igual estilo que Carrito -->
+<div class="nav-bar">
+    <div class="d-flex align-items-center">
+        <img th:src="@{/logo.png}" alt="Logo" width="45" style="margin-right: 10px;">
+        <h4 style="margin:0;">Biblioteca Digital</h4>
+    </div>
+
+    <div class="d-flex align-items-center">
+        <a th:href="@{/}">Inicio</a>
+        <a th:href="@{/catalogo}"><strong>Catálogo</strong></a>
+        <a th:href="@{/carrito}">Carrito</a>
+        <button class="btn btn-warning btn-sm ms-3">Admin</button>
+    </div>
+</div>
+
+<div class="container mt-4 mb-5">
+    <div class="row">
+        <!-- COLUMNA IZQUIERDA: CATEGORÍAS -->
+        <div class="col-md-3 mb-4">
+            <h5 class="mb-3">Categorías</h5>
+
+            <div class="list-group">
+                <!-- Botón "Todas" -->
+                <a th:href="@{/catalogo}"
+                   class="list-group-item list-group-item-action"
+                   th:classappend="${categoriaSeleccionada} == null ? ' active'">
+                    Todas
+                </a>
+
+                <!-- Botones por cada categoría de la tabla 'categoria' -->
+                <a th:each="cat : ${categorias}"
+                   th:href="@{/catalogo(categoria=${cat.nombreCategoria})}"
+                   th:text="${cat.nombreCategoria}"
+                   class="list-group-item list-group-item-action"
+                   th:classappend="${cat.nombreCategoria} == ${categoriaSeleccionada} ? ' active'">
+                    Categoria
+                </a>
+            </div>
+        </div>
+
+        <!-- COLUMNA DERECHA: LIBROS -->
+        <div class="col-md-9">
+            <h3 class="mb-4">
+                <span th:if="${categoriaSeleccionada == null}">Todos los libros</span>
+                <span th:if="${categoriaSeleccionada != null}"
+                      th:text="'Libros de ' + ${categoriaSeleccionada}">Libros de X</span>
+            </h3>
+
+            <!-- Si hay libros -->
+            <div class="row" th:if="${!#lists.isEmpty(libros)}">
+                <div class="col-md-4 mb-4" th:each="libro : ${libros}">
+                    <div class="card card-libro h-100">
+
+                        <!-- Imagen del libro (columna imagen en la BD) -->
+                        <img class="card-img-top"
+                             th:if="${libro.imagen != null}"
+                             th:src="@{|/images/${libro.imagen}|}"
+                             th:alt="${libro.titulo}">
+                        <img class="card-img-top"
+                             th:if="${libro.imagen == null}"
+                             src="https://via.placeholder.com/300x220?text=Sin+imagen"
+                             alt="Sin imagen">
+
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${libro.titulo}">Título</h5>
+                            <p class="card-text mb-1">
+                                <strong th:text="${libro.autor}">Autor</strong>
+                            </p>
+                            <p class="card-text small text-muted mb-2"
+                               th:text="${libro.categoria != null ? libro.categoria.nombreCategoria : 'Sin categoría'}">
+                                Categoría
+                            </p>
+                            <p class="card-text" th:text="${libro.descripcion}">
+                                Descripción del libro...
+                            </p>
+                        </div>
+
+                        <div class="card-footer d-flex justify-content-between align-items-center">
+                            <span class="fw-bold text-success"
+                                  th:text="'€ ' + ${libro.precio}">€ 0,00</span>
+                            <span class="badge bg-secondary"
+                                  th:text="'Stock: ' + ${libro.stock}">Stock: 0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Si NO hay libros en esa categoría -->
+            <div th:if="${#lists.isEmpty(libros)}">
+                <div class="alert alert-info">
+                    No hay libros en esta categoría por ahora.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JS de Bootstrap (opcional pero recomendable) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -67,7 +67,8 @@ public class Libro {
     public String getImagen() { return imagen; }
     public void setImagen(String imagen) { this.imagen = imagen; }
 
-    public boolean isEnVenta() { return enVenta; }
+    public boolean getEnVenta() 
+    { return enVenta; }
     public void setEnVenta(boolean enVenta) { this.enVenta = enVenta; }
 
     public Integer getStock() { return stock; }

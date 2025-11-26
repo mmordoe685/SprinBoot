@@ -1,6 +1,6 @@
 package com.biblioteca.libreria.controller;
 
-import com.biblioteca.libreria.Service.EmailService;
+import com.biblioteca.libreria.service.EmailService;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -31,8 +31,12 @@ public class EmailController {
     /**
      * Endpoint para enviar un correo de bienvenida tras un nuevo registro.
      *
-     * Ejemplo:
-     * POST /api/mail/registro?to=correo@ejemplo.com&username=NombreUsuario
+     * Se puede probar realizando una petición POST a:
+     * /api/mail/registro?to=correo@ejemplo.com&username=NombreUsuario
+     *
+     * @param to       dirección de correo del destinatario
+     * @param username nombre del usuario registrado
+     * @return mensaje de confirmación en texto plano
      */
     @PostMapping("/registro")
     public String sendRegistro(@RequestParam String to,
@@ -44,8 +48,13 @@ public class EmailController {
     /**
      * Endpoint para enviar un correo de confirmación de cuenta.
      *
-     * Ejemplo:
-     * POST /api/mail/confirmacion?to=correo@ejemplo.com&username=NombreUsuario&token=abc123
+     * Ejemplo de uso:
+     * /api/mail/confirmacion?to=correo@ejemplo.com&username=NombreUsuario&token=abc123
+     *
+     * @param to       dirección de correo del destinatario
+     * @param username nombre del usuario
+     * @param token    token de confirmación generado previamente
+     * @return mensaje de confirmación en texto plano
      */
     @PostMapping("/confirmacion")
     public String sendConfirmacion(@RequestParam String to,
@@ -58,8 +67,13 @@ public class EmailController {
     /**
      * Endpoint para enviar un correo de recuperación de contraseña.
      *
-     * Ejemplo:
-     * POST /api/mail/recuperacion?to=correo@ejemplo.com&username=NombreUsuario&token=reset123
+     * Ejemplo de uso:
+     * /api/mail/recuperacion?to=correo@ejemplo.com&username=NombreUsuario&token=reset123
+     *
+     * @param to       dirección de correo del destinatario
+     * @param username nombre del usuario
+     * @param token    token de recuperación de contraseña
+     * @return mensaje de confirmación en texto plano
      */
     @PostMapping("/recuperacion")
     public String sendRecuperacion(@RequestParam String to,
@@ -72,8 +86,13 @@ public class EmailController {
     /**
      * Endpoint para enviar un correo con un resumen de actividad.
      *
-     * Ejemplo:
-     * POST /api/mail/resumen?to=correo@ejemplo.com&username=NombreUsuario&resumen=TextoResumen
+     * Ejemplo de uso:
+     * /api/mail/resumen?to=correo@ejemplo.com&username=NombreUsuario&resumen=TextoResumen
+     *
+     * @param to       dirección de correo del destinatario
+     * @param username nombre del usuario
+     * @param resumen  resumen de la actividad que se desea enviar
+     * @return mensaje de confirmación en texto plano
      */
     @PostMapping("/resumen")
     public String sendResumen(@RequestParam String to,

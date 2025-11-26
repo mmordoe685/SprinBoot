@@ -1,4 +1,4 @@
-package com.biblioteca.libreria.Service;
+package com.biblioteca.libreria.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -140,8 +140,9 @@ public class EmailService {
      * @param resetToken token generado para la recuperación de contraseña
      */
     public void sendPasswordRecoveryEmail(String to, String username, String resetToken) {
-        // Construimos la URL de recuperación utilizando la URL base y el token
-        String resetUrl = baseUrl + "/reset-password?token=" + resetToken;
+        // Construimos la URL de recuperación utilizando la URL base, el token y el correo
+        // Ejemplo: http://localhost:8081/reset-password?token=abc123&email=correo@ejemplo.com
+        String resetUrl = baseUrl + "/reset-password?token=" + resetToken + "&email=" + to;
 
         String subject = "Recuperación de contraseña - Biblioteca Online";
 
@@ -167,6 +168,9 @@ public class EmailService {
 
     /**
      * Envío de un resumen de actividad al usuario.
+     *
+     * Este resumen puede contener información sobre compras realizadas,
+     * libros añadidos a la biblioteca personal u otras acciones recientes.
      *
      * @param to               dirección de correo del usuario
      * @param username         nombre del usuario

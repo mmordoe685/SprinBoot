@@ -13,10 +13,16 @@ public class Usuario {
     private Integer idUsuario;
 
     private String nombre;
+
+    @Column(unique = true, nullable = false)
     private String email;
+    
     private String contrasena;
     private String tipoUsuario;
     private LocalDateTime fechaRegistro;
+
+    private String fotoUrl;
+    private String pais;
 
     @OneToMany(mappedBy = "usuario")
     private List<Compra> compras;
@@ -74,6 +80,23 @@ public class Usuario {
 
     public void setFechaRegistro(LocalDateTime fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
+    }
+
+
+    public String getFotoUrl() {
+        return fotoUrl;
+    }
+
+    public void setFotoUrl(String fotoUrl) {
+        this.fotoUrl = fotoUrl;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
     }
 
     public List<Compra> getCompras() {
